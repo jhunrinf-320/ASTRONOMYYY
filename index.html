@@ -1,292 +1,935 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#050713">
-  <meta name="description" content="A little universe made just for you.">
-  <title>A Universe Just for You ✦</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050713">
+<meta name="description" content="A personal journey through the Solar System, the Moon, and the stars.">
+<title>A Universe Just for You ✦</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050713;--panel:rgba(18,24,48,.78);--gold:#f5d99a;--purple:#a58bff;--muted:#a5abc5;--white:#f7f5ff}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:86px}
+body{min-height:100vh;background:var(--bg);color:var(--white);font-family:"DM Sans",sans-serif;overflow-x:hidden;isolation:isolate}
+button,input{font:inherit}button,a{-webkit-tap-highlight-color:transparent}button{cursor:pointer}a{color:inherit;text-decoration:none}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+#starfield{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 15% 20%,#4a36912e,transparent 45%),radial-gradient(ellipse at 85% 75%,#1d5c9426,transparent 45%)}
+#progress{position:fixed;z-index:150;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,var(--purple),var(--gold))}
+nav{position:fixed;z-index:50;top:0;left:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 7%;background:#050713c9;backdrop-filter:blur(16px);border-bottom:1px solid #ffffff12}
+.logo{font:1.25rem "Playfair Display",serif;color:var(--gold)}
+.nav-links{display:flex;gap:25px;list-style:none}.nav-links a{font-size:.85rem;color:#c4c8dc}.nav-links a:hover{color:var(--gold)}
+.menu-button{display:none;background:none;border:0;color:white;font-size:1.6rem}
+section{position:relative;padding:100px 7%}
+h1,h2,h3{font-family:"Playfair Display",serif;font-weight:500}
+.eyebrow{color:var(--gold);letter-spacing:4px;text-transform:uppercase;font-size:.7rem;margin-bottom:15px}
+.section-heading{text-align:center;margin:0 auto 42px;max-width:760px}
+.section-heading h2{font-size:clamp(2.1rem,5vw,3.5rem)}
+.section-heading p:last-child{color:var(--muted);line-height:1.8;margin-top:12px}
+.primary-btn{display:inline-block;border:1px solid #e9d29c;background:linear-gradient(120deg,#f0d69f,#d4b777);color:#171322;padding:14px 27px;border-radius:40px;font-weight:700;transition:.3s}
+.primary-btn:hover{transform:translateY(-3px);box-shadow:0 0 30px #e9d29c55}
+.intro{position:fixed;inset:0;z-index:120;display:grid;place-items:center;text-align:center;background:radial-gradient(ellipse at center,#171637,#080a1b 58%,#03040c);transition:opacity .9s,visibility .9s}
+.intro.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.intro-content{padding:25px;max-width:650px}
+.intro-orb{width:130px;height:130px;border-radius:50%;margin:0 auto 32px;background:radial-gradient(circle at 30% 30%,#f4d5ff,#9876dc 30%,#3d347f 68%,#11152c);box-shadow:0 0 55px #9b7cff88,0 0 130px #6c53c955;animation:float 5s ease-in-out infinite}
+.intro h1{font-size:clamp(2.8rem,8vw,5rem);line-height:1.1;margin-bottom:18px}.intro h1 span{color:#d6c2ff}
+.intro-description{color:#b8bbd2;line-height:1.9;max-width:450px;margin:0 auto 28px}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-top:130px;overflow:hidden}
+.hero-tag{color:var(--gold);letter-spacing:4px;font-size:.72rem;margin-bottom:20px}
+.hero h1{font-size:clamp(3rem,9vw,6.5rem);line-height:1.08}
+.hero h1 span{background:linear-gradient(100deg,#fff0c5,#b8a4ff,#e7c8ff);color:transparent;background-clip:text}
+.hero-description{max-width:570px;color:#b3b8d1;line-height:1.9;margin:24px auto 28px}
+.hero-orbit{position:absolute;top:52%;left:50%;width:290px;height:290px;border:1px solid #b5a4ff38;border-radius:50%;transform:translate(-50%,-50%);z-index:-1;animation:spin 45s linear infinite}
+.hero-orbit:after{content:"";position:absolute;top:18px;left:18px;width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 18px var(--gold)}
+.scroll-hint{margin-top:55px;color:#858ca8;font-size:.7rem;letter-spacing:3px}.scroll-hint span{display:block;margin-top:10px;animation:bob 1.5s infinite}
+.planet-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1100px;margin:auto}
+.planet-card{min-height:195px;background:var(--panel);border:1px solid #ffffff15;border-radius:19px;padding:24px 12px;text-align:center;color:white;transition:.3s}
+.planet-card:hover,.planet-card.active{transform:translateY(-6px);border-color:#c5aaff88;background:#2a2750b3}
+.planet{width:70px;height:70px;border-radius:50%;margin:0 auto 17px;box-shadow:inset -12px -8px 20px #0008,0 0 24px #ffffff15}
+.mercury{background:radial-gradient(circle at 30% 30%,#ddd,#777 72%)}
+.venus{background:radial-gradient(circle at 30% 30%,#ffe5a8,#c77e38 75%)}
+.earth{background:radial-gradient(circle at 30% 30%,#9de9ff,#2469c7 48%,#15432c 72%)}
+.mars{background:radial-gradient(circle at 30% 30%,#ffb18a,#b34d35 75%)}
+.jupiter{background:repeating-linear-gradient(0deg,#b98057 0 8px,#e7c69d 8px 16px,#9c634d 16px 22px)}
+.saturn{position:relative;background:radial-gradient(circle at 30% 30%,#f4dfa9,#b58d5b 80%)}
+.saturn:after{content:"";position:absolute;width:112px;height:28px;border:5px solid #dfc28c;border-radius:50%;top:21px;left:-21px;transform:rotate(-22deg)}
+.uranus{background:radial-gradient(circle at 30% 30%,#c9ffff,#5ca9c5)}
+.neptune{background:radial-gradient(circle at 30% 30%,#a4baff,#304cbd)}
+.planet-card h3{font-size:1.15rem}.planet-card p{font-size:.75rem;color:var(--muted);margin-top:6px}
+.planet-info{max-width:900px;margin:28px auto 0;padding:25px;background:var(--panel);border:1px solid #a58bff44;border-radius:18px;text-align:center;box-shadow:0 18px 55px #0003}
+.planet-info h3{font-size:1.5rem;color:var(--gold);margin-bottom:9px}.planet-info p,.muted{color:#bdc2d8;line-height:1.8}
+.sim-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;margin:18px auto}
+.control-btn,.speed-select{border:1px solid #ffffff2b;background:#171b35;color:#e9e6ff;border-radius:30px;padding:10px 16px}
+.control-btn:hover{border-color:var(--gold)}
+#orbitCanvas{display:block;width:100%;height:auto;max-height:680px;background:radial-gradient(ellipse at center,#111735,#070a19 75%);border:1px solid #ffffff18;border-radius:24px;touch-action:pan-y}
+.sim-readout{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:15px auto;color:#c3c7dd;font-size:.85rem}
+.sim-readout span{padding:8px 12px;background:#ffffff0a;border-radius:20px}
+.note{max-width:900px;margin:15px auto 0;color:#8992b0;font-size:.78rem;line-height:1.7;text-align:center}
+.constellation-layout{display:grid;grid-template-columns:1fr 1fr;gap:30px;max-width:1000px;margin:auto;align-items:center}
+.constellation-visual{min-height:320px;display:grid;place-items:center;background:radial-gradient(circle,#1d2045,#090c1c 70%);border:1px solid #ffffff18;border-radius:24px}
+.constellation-visual svg{width:90%;max-width:380px}
+.star-point{fill:#fff4c7;filter:drop-shadow(0 0 7px white)}
+.star-line{stroke:#b9a6ff;stroke-width:1.5;opacity:.75}
+.constellation-options{display:grid;gap:12px}
+.constellation-option{text-align:left;color:white;padding:16px 18px;border:1px solid #ffffff17;background:#12172c;border-radius:14px}
+.constellation-option.active,.constellation-option:hover{border-color:var(--gold);background:#24213b}
+.constellation-option strong{display:block;color:var(--gold);margin-bottom:5px}
+.constellation-option span{font-size:.8rem;color:#aeb4cd}
+.constellation-info{color:#c1c5da;line-height:1.8;margin-top:17px}
+.galaxy-section{text-align:center;overflow:hidden}
+.galaxy-art{height:320px;max-width:850px;margin:35px auto;border-radius:50%;position:relative;background:radial-gradient(ellipse at 50% 50%,#fff 0%,#e5b9ff 1%,#8766d9 5%,#3a347d 15%,transparent 47%),radial-gradient(ellipse at 50% 50%,#263c82 0%,#151438 45%,transparent 70%);filter:drop-shadow(0 0 35px #8b6eff55);animation:galaxy 9s ease-in-out infinite alternate}
+.galaxy-art:before,.galaxy-art:after{content:"";position:absolute;inset:22% 0;border:2px solid #bba4ff33;border-radius:50%;transform:rotate(25deg)}
+.galaxy-art:after{inset:10% 8%;transform:rotate(-25deg);border-color:#e0c5ff22}
+.galaxy-caption{max-width:650px;margin:auto;color:#c1c5da;line-height:1.9}
+.moon-explorer{max-width:680px;margin:auto;padding:38px 22px;background:var(--panel);border:1px solid #ffffff18;border-radius:25px;text-align:center}
+#moonCanvas{width:190px;height:190px;display:block;margin:0 auto 22px;filter:drop-shadow(0 0 25px #d6d9ff44)}
+.moon-explorer h3{color:var(--gold);font-size:1.6rem;margin-bottom:8px}
+.moon-explorer p{color:var(--muted);line-height:1.8}
+input[type=range]{width:min(85%,500px);margin:25px 0 10px;accent-color:#c3a7ff}
+.phase-labels{display:flex;justify-content:space-between;padding:0 8%;color:#858da9;font-size:.7rem}
+.wish-box{max-width:800px;margin:auto;text-align:center;padding:58px 24px;background:radial-gradient(ellipse,#22204c,#0a0d20 70%);border:1px solid #a58bff33;border-radius:28px}
+.wish-box h2{font-size:clamp(2rem,5vw,3.2rem)}
+.wish-box p{color:#b9bfd6;line-height:1.9;margin:16px auto 25px;max-width:540px}
+.wish-result{min-height:50px;color:var(--gold);margin-top:18px;font:1.2rem/1.7 "Playfair Display",serif}
+.final-section{min-height:70vh;display:grid;place-items:center;text-align:center}
+.final-content{max-width:670px}
+.final-star{font-size:3rem;color:var(--gold);text-shadow:0 0 35px var(--gold);animation:pulse 2s infinite}
+.final-content h2{font-size:clamp(2.4rem,6vw,4rem);margin:20px 0}
+.final-content p{color:#b8bdd4;line-height:2;white-space:pre-line}
+.signature{color:var(--gold)!important;margin-top:25px;font:italic 1.1rem "Playfair Display",serif}
+.secret-star{position:absolute;right:10%;top:18%;font-size:22px;color:var(--gold);opacity:.65;cursor:pointer}
+.secret-message{display:none;max-width:440px;margin:22px auto 0;padding:18px;border:1px solid #e9d29c55;border-radius:15px;color:#f3dfad;line-height:1.8;background:#17172c}
+.secret-message.show{display:block}
+.final-surprise{position:fixed;inset:0;z-index:130;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at center,#211c53,#0b0c22 60%,#03040c);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .9s,visibility .9s;overflow-y:auto}
+.final-surprise.active{opacity:1;visibility:visible;pointer-events:auto}
+.surprise-inner{width:min(100%,700px);text-align:center}
+.portal{width:170px;height:170px;border:2px solid #c8b6ff88;border-radius:50%;margin:0 auto 26px;display:grid;place-items:center;box-shadow:0 0 25px #a58bff77,inset 0 0 25px #a58bff55;animation:spin 12s linear infinite,glow 3s ease-in-out infinite alternate}
+.portal span{font-size:4rem;color:var(--gold);text-shadow:0 0 30px var(--gold)}
+.countdown{font:clamp(3rem,9vw,5rem) "Playfair Display",serif;color:var(--gold);min-height:1.2em}
+.surprise-inner h2{font-size:clamp(2.3rem,7vw,4rem);line-height:1.15;margin:20px 0;background:linear-gradient(100deg,#fff0c5,#b8a4ff);color:transparent;background-clip:text}
+.surprise-message{white-space:pre-line;color:#c5c9df;line-height:2;margin:22px auto;max-width:620px;min-height:120px}
+.surprise-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.secondary-btn{border:1px solid #ffffff44;color:#d9d9ed;background:#ffffff0b;border-radius:30px;padding:12px 20px}
+.skip-surprise{position:fixed;right:18px;bottom:18px}
+.particle{position:fixed;left:50%;top:50%;width:4px;height:4px;border-radius:50%;background:#fff5cf;box-shadow:0 0 12px white;pointer-events:none;animation:burst 1.5s ease-out forwards}
+.reveal{opacity:0;transform:translateY(25px);transition:opacity .8s,transform .8s}
+.reveal.visible{opacity:1;transform:none}
+footer{text-align:center;padding:28px;color:#737b99;font-size:.75rem;border-top:1px solid #ffffff0d}
+@keyframes float{50%{transform:translateY(-14px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes bob{50%{transform:translateY(8px)}}
+@keyframes pulse{50%{opacity:.55;transform:scale(1.1)}}
+@keyframes galaxy{to{transform:scale(1.04) rotate(-9deg)}}
+@keyframes glow{to{box-shadow:0 0 55px #a58bffbb,inset 0 0 45px #a58bff88}}
+@keyframes burst{to{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+@media(max-width:850px){.planet-grid{grid-template-columns:repeat(2,1fr)}.constellation-layout{grid-template-columns:1fr}}
+@media(max-width:620px){nav{padding:15px 6%}.menu-button{display:block}.nav-links{display:none;position:absolute;top:62px;left:0;width:100%;padding:22px 7%;background:#090c1c;flex-direction:column;gap:18px}.nav-links.open{display:flex}section{padding:82px 6%}.hero{min-height:95vh}.hero-orbit{width:220px;height:220px}.planet-grid{gap:12px}.planet-card{min-height:180px;padding:20px 8px}.planet{width:62px;height:62px}.saturn:after{width:100px;left:-19px;top:18px}.galaxy-art{height:230px}.secret-star{right:7%;top:10%}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
 </head>
-
 <body>
-  <canvas id="starfield" aria-hidden="true"></canvas>
-  <div id="progress"></div>
+<canvas id="starfield" aria-hidden="true"></canvas>
+<div id="progress"></div>
 
-  <!-- INTRO -->
-  <div class="intro" id="intro">
-    <div class="intro-content">
-      <div class="intro-orb"></div>
-      <p class="eyebrow">A LITTLE JOURNEY THROUGH THE COSMOS</p>
-      <h1>A Universe<br><span>Just for You</span></h1>
-      <p class="intro-description">
-        Some things are too beautiful not to be shared.
-        Here's a little universe waiting for you to explore.
-      </p>
-      <button class="primary-btn" id="enterBtn">Enter the Universe ✦</button>
+<div class="intro" id="intro">
+  <div class="intro-content">
+    <div class="intro-orb"></div>
+    <p class="eyebrow">A LITTLE JOURNEY THROUGH THE COSMOS</p>
+    <h1>A Universe<br><span>Just for You</span></h1>
+    <p class="intro-description">Some things are too beautiful not to be shared. Here's a little universe waiting for you to explore.</p>
+    <button class="primary-btn" id="enterBtn">Enter the Universe ✦</button>
+  </div>
+</div>
+
+<nav>
+  <a href="#home" class="logo">✦ Cosmic Dreams</a>
+  <button class="menu-button" id="menuButton" aria-label="Open navigation" aria-expanded="false">☰</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#planets">Planets</a></li>
+    <li><a href="#simulation">Orbit Lab</a></li>
+    <li><a href="#constellations">Stars</a></li>
+    <li><a href="#moon">Moon</a></li>
+    <li><a href="#wish">Wish</a></li>
+  </ul>
+</nav>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-orbit"></div>
+  <p class="hero-tag">✦ A SMALL CORNER OF THE COSMOS ✦</p>
+  <h1>Somewhere<br>in the <span>Universe.</span></h1>
+  <p class="hero-description">Billions of galaxies. Countless stars. Endless possibilities. And here's a tiny corner of the universe made for you to explore.</p>
+  <a href="#planets" class="primary-btn">Begin Exploring ↓</a>
+  <div class="scroll-hint">SCROLL TO EXPLORE<span>↓</span></div>
+</section>
+
+<section id="planets">
+  <div class="section-heading reveal">
+    <p class="eyebrow">Our Solar System</p>
+    <h2>Eight Worlds, One Sun</h2>
+    <p>Choose a planet to discover a little more about it.</p>
+  </div>
+  <div class="planet-grid">
+    <button class="planet-card active" data-planet="Mercury"><div class="planet mercury"></div><h3>Mercury</h3><p>The Swiftest Planet</p></button>
+    <button class="planet-card" data-planet="Venus"><div class="planet venus"></div><h3>Venus</h3><p>The Brightest Planet</p></button>
+    <button class="planet-card" data-planet="Earth"><div class="planet earth"></div><h3>Earth</h3><p>Our Pale Blue Dot</p></button>
+    <button class="planet-card" data-planet="Mars"><div class="planet mars"></div><h3>Mars</h3><p>The Red Planet</p></button>
+    <button class="planet-card" data-planet="Jupiter"><div class="planet jupiter"></div><h3>Jupiter</h3><p>The Giant</p></button>
+    <button class="planet-card" data-planet="Saturn"><div class="planet saturn"></div><h3>Saturn</h3><p>The Ringed Wonder</p></button>
+    <button class="planet-card" data-planet="Uranus"><div class="planet uranus"></div><h3>Uranus</h3><p>The Ice Giant</p></button>
+    <button class="planet-card" data-planet="Neptune"><div class="planet neptune"></div><h3>Neptune</h3><p>The Distant World</p></button>
+  </div>
+  <div class="planet-info" aria-live="polite">
+    <h3 id="planetTitle">Mercury</h3>
+    <p id="planetDescription">Mercury is the smallest planet and the closest to the Sun. One orbit around the Sun takes about 88 Earth days.</p>
+  </div>
+</section>
+
+<section id="simulation">
+  <div class="section-heading reveal">
+    <p class="eyebrow">Interactive Astronomy Lab</p>
+    <h2>Watch the Planets Move</h2>
+    <p>A Keplerian model of the eight planets, using approximate orbital elements. Change the simulation speed, pause, or jump through time.</p>
+  </div>
+  <div class="sim-controls">
+    <button class="control-btn" id="playPause">Pause</button>
+    <button class="control-btn" id="dayBack">− 30 days</button>
+    <button class="control-btn" id="dayForward">+ 30 days</button>
+    <button class="control-btn" id="resetDate">Today</button>
+    <label class="muted" for="speedSelect">Speed</label>
+    <select class="speed-select" id="speedSelect">
+      <option value="1">1 day / second</option>
+      <option value="5" selected>5 days / second</option>
+      <option value="20">20 days / second</option>
+      <option value="100">100 days / second</option>
+      <option value="365">1 year / second</option>
+    </select>
+  </div>
+  <canvas id="orbitCanvas" width="1000" height="700" aria-label="Top-down model of the eight planetary orbits"></canvas>
+  <div class="sim-readout">
+    <span id="simDate">Date: —</span>
+    <span id="selectedPlanet">Selected: Earth</span>
+    <span id="earthDistance">Earth–Sun: 1.00 AU</span>
+  </div>
+  <p class="note">The orbital paths and changing positions use Kepler's equation with approximate planetary elements. Distances are plotted in AU, but planet sizes are enlarged for visibility. This is a two-body approximation, not a live JPL Horizons ephemeris; gravitational perturbations and exact spacecraft-grade positions are not included.</p>
+</section>
+
+<section id="constellations">
+  <div class="section-heading reveal">
+    <p class="eyebrow">Connect the Stars</p>
+    <h2>Stories Written in the Sky</h2>
+    <p>Constellations are patterns we recognize from Earth's viewpoint.</p>
+  </div>
+  <div class="constellation-layout reveal">
+    <div class="constellation-visual">
+      <svg viewBox="0 0 400 300" id="constellationSvg" role="img" aria-label="Stylized star pattern">
+        <g id="starLines" class="star-line"></g>
+        <g id="starPoints"></g>
+      </svg>
+    </div>
+    <div>
+      <div class="constellation-options">
+        <button class="constellation-option active" data-constellation="Orion"><strong>Orion</strong><span>The Hunter — known for its three-star belt.</span></button>
+        <button class="constellation-option" data-constellation="Ursa Major"><strong>Ursa Major</strong><span>The Great Bear — includes the Big Dipper asterism.</span></button>
+        <button class="constellation-option" data-constellation="Cassiopeia"><strong>Cassiopeia</strong><span>The Queen — recognized by its W-shaped pattern.</span></button>
+        <button class="constellation-option" data-constellation="Your Star"><strong>Your Star ✦</strong><span>A little pattern created for this universe.</span></button>
+      </div>
+      <p class="constellation-info" id="constellationInfo">Orion is one of the most recognizable constellations in the night sky. Its belt is formed by three aligned stars.</p>
     </div>
   </div>
+  <p class="note">These constellation drawings are simplified educational diagrams, not a live sky chart for a particular date, time, or location.</p>
+</section>
 
-  <!-- NAVIGATION -->
-  <nav>
-    <a href="#home" class="logo">✦ Cosmic Dreams</a>
-    <button class="menu-button" id="menuButton"
-      aria-label="Open navigation" aria-expanded="false"
-      aria-controls="navLinks">☰</button>
+<section class="galaxy-section" id="galaxy">
+  <div class="section-heading reveal"><p class="eyebrow">Beyond Our Solar System</p><h2>A Galaxy of Possibilities</h2></div>
+  <div class="galaxy-art reveal" aria-label="Artistic illustration of a spiral galaxy"></div>
+  <p class="galaxy-caption reveal">Our Milky Way contains hundreds of billions of stars. This glowing spiral is an artistic illustration, not a scale-accurate simulation of the entire galaxy.</p>
+</section>
 
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#planets">Planets</a></li>
-      <li><a href="#constellations">Stars</a></li>
-      <li><a href="#galaxy">Galaxy</a></li>
-      <li><a href="#moon">Moon</a></li>
-      <li><a href="#wish">Wish</a></li>
-    </ul>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero" id="home">
-    <div class="hero-orbit"></div>
-    <p class="hero-tag">✦ A SMALL CORNER OF THE COSMOS ✦</p>
-    <h1>Somewhere<br>in the <span>Universe.</span></h1>
-    <p class="hero-description">
-      Billions of galaxies. Countless stars. Endless possibilities.
-      And here's a tiny corner of the universe made for you to explore.
-    </p>
-    <a href="#planets" class="primary-btn">Begin Exploring ↓</a>
-    <div class="scroll-hint">SCROLL TO EXPLORE<span>↓</span></div>
-  </section>
-
-  <!-- PLANETS -->
-  <section id="planets">
-    <div class="section-heading reveal">
-      <p class="eyebrow">Our Solar System</p>
-      <h2>Eight Worlds, One Sun</h2>
-      <p>Every planet has a story. Click one to discover it.</p>
-    </div>
-
-    <div class="planet-grid">
-      <button class="planet-card active" data-planet="Mercury">
-        <div class="planet mercury"></div>
-        <h3>Mercury</h3><p>The Swiftest Planet</p>
-      </button>
-      <button class="planet-card" data-planet="Venus">
-        <div class="planet venus"></div>
-        <h3>Venus</h3><p>The Brightest Planet</p>
-      </button>
-      <button class="planet-card" data-planet="Earth">
-        <div class="planet earth"></div>
-        <h3>Earth</h3><p>Our Pale Blue Dot</p>
-      </button>
-      <button class="planet-card" data-planet="Mars">
-        <div class="planet mars"></div>
-        <h3>Mars</h3><p>The Red Planet</p>
-      </button>
-      <button class="planet-card" data-planet="Jupiter">
-        <div class="planet jupiter"></div>
-        <h3>Jupiter</h3><p>The Giant</p>
-      </button>
-      <button class="planet-card" data-planet="Saturn">
-        <div class="planet saturn"></div>
-        <h3>Saturn</h3><p>The Ringed Wonder</p>
-      </button>
-      <button class="planet-card" data-planet="Uranus">
-        <div class="planet uranus"></div>
-        <h3>Uranus</h3><p>The Ice Giant</p>
-      </button>
-      <button class="planet-card" data-planet="Neptune">
-        <div class="planet neptune"></div>
-        <h3>Neptune</h3><p>The Distant World</p>
-      </button>
-    </div>
-
-    <div class="planet-info" aria-live="polite">
-      <h3 id="planetTitle">Mercury</h3>
-      <p id="planetDescription">
-        Mercury is the smallest planet and the closest to the Sun.
-        A year there lasts only 88 Earth days.
-      </p>
-    </div>
-  </section>
-
-  <!-- CONSTELLATIONS -->
-  <section id="constellations">
-    <div class="section-heading reveal">
-      <p class="eyebrow">Connect the Stars</p>
-      <h2>Stories Written in the Sky</h2>
-      <p>People have looked up at these patterns for thousands of years.</p>
-    </div>
-
-    <div class="constellation-layout reveal">
-      <div class="constellation-visual">
-        <svg viewBox="0 0 400 300" id="constellationSvg"
-          role="img" aria-label="Interactive constellation illustration">
-          <g id="starLines" class="star-line">
-            <line x1="100" y1="75" x2="165" y2="110"/>
-            <line x1="165" y1="110" x2="220" y2="70"/>
-            <line x1="165" y1="110" x2="185" y2="190"/>
-            <line x1="185" y1="190" x2="260" y2="220"/>
-            <line x1="260" y1="220" x2="300" y2="140"/>
-          </g>
-          <g id="starPoints">
-            <circle class="star-point" cx="100" cy="75" r="5"/>
-            <circle class="star-point" cx="165" cy="110" r="6"/>
-            <circle class="star-point" cx="220" cy="70" r="5"/>
-            <circle class="star-point" cx="185" cy="190" r="5"/>
-            <circle class="star-point" cx="260" cy="220" r="6"/>
-            <circle class="star-point" cx="300" cy="140" r="5"/>
-          </g>
-        </svg>
-      </div>
-
-      <div>
-        <div class="constellation-options">
-          <button class="constellation-option active" data-constellation="Orion">
-            <strong>Orion</strong>
-            <span>The Hunter — recognizable by its three-star belt.</span>
-          </button>
-          <button class="constellation-option" data-constellation="Ursa Major">
-            <strong>Ursa Major</strong>
-            <span>The Great Bear — home to the famous Big Dipper.</span>
-          </button>
-          <button class="constellation-option" data-constellation="Cassiopeia">
-            <strong>Cassiopeia</strong>
-            <span>The Queen — famous for its W-shaped pattern.</span>
-          </button>
-          <button class="constellation-option" data-constellation="Your Star">
-            <strong>Your Star ✦</strong>
-            <span>A little pattern created just for this universe.</span>
-          </button>
-        </div>
-
-        <p class="constellation-info" id="constellationInfo" aria-live="polite">
-          Orion is one of the most recognizable constellations in the night sky.
-          Its three aligned belt stars make it easy to find.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- GALAXY -->
-  <section class="galaxy-section" id="galaxy">
-    <div class="section-heading reveal">
-      <p class="eyebrow">Beyond Our Solar System</p>
-      <h2>A Galaxy of Possibilities</h2>
-    </div>
-    <div class="galaxy-art reveal" aria-hidden="true"></div>
-    <p class="galaxy-caption reveal">
-      Our Milky Way contains billions of stars, and perhaps billions of planets.
-      Somewhere among all that wonder, there are still so many things waiting to be discovered.
-    </p>
-  </section>
-
-  <!-- MOON -->
-  <section id="moon">
-    <div class="section-heading reveal">
-      <p class="eyebrow">Our Closest Celestial Neighbor</p>
-      <h2>Phases of the Moon</h2>
-      <p>Move the slider and watch the Moon change throughout its cycle.</p>
-    </div>
-
-    <div class="moon-explorer reveal">
-      <div class="moon">
-        <div class="moon-shadow" id="moonShadow" aria-hidden="true"></div>
-      </div>
-      <h3 id="moonName">New Moon</h3>
-      <p id="moonDescription">The Moon's illuminated side faces away from Earth.</p>
-      <input type="range" id="moonSlider" min="0" max="7"
-        value="0" step="1" aria-label="Select a moon phase">
-      <div class="phase-labels">
-        <span>New</span><span>Full</span><span>New</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- WISH -->
-  <section id="wish">
-    <div class="wish-box reveal">
-      <p class="eyebrow">A Moment Under the Stars</p>
-      <h2>Wish Upon a Star ✦</h2>
-      <p>
-        Close your eyes, think of something wonderful, and make a wish.
-        The universe is full of surprises.
-      </p>
-      <button class="primary-btn" id="wishBtn">Make a Wish ✨</button>
-      <div class="wish-result" id="wishResult" aria-live="polite"></div>
-    </div>
-  </section>
-
-  <!-- FINAL MESSAGE -->
-  <section class="final-section" id="ending">
-    <button class="secret-star" id="secretStar" type="button"
-      title="A little secret" aria-label="Reveal a hidden message">✦</button>
-
-    <div class="final-content reveal">
-      <div class="final-star">✧</div>
-      <p class="eyebrow">Before You Go</p>
-      <h2>You Are One of a Kind.</h2>
-      <p>
-        The universe is enormous, full of mysteries and beautiful things.
-        Never lose your curiosity. Keep looking up, keep dreaming,
-        and never stop discovering.
-      </p>
-      <p class="signature">A little universe, made just for you. ✦</p>
-      <div class="secret-message" id="secretMessage">
-        And here's a little reminder: you make the world a little brighter
-        just by being in it. Keep shining. ✨
-      </div>
-    </div>
-  </section>
-
-  <footer>Made with curiosity and a little stardust ✦</footer>
-
-  <!-- CINEMATIC FINAL SURPRISE -->
-  <div class="final-surprise" id="finalSurprise"
-    role="dialog" aria-modal="true"
-    aria-label="A special surprise" aria-hidden="true">
-
-    <div class="surprise-nebula"></div>
-
-    <div class="portal-container" id="portalContainer" aria-hidden="true">
-      <div class="portal"></div>
-      <div class="portal-ring"></div>
-      <div class="portal-core"></div>
-    </div>
-
-    <div class="surprise-content" id="surpriseContent">
-      <p class="eyebrow">✦ ONE LAST DISCOVERY ✦</p>
-      <h2>Wait...<br>There's something<br>special for you.</h2>
-      <p>
-        Before you leave this little universe,
-        take a moment to discover one final secret.
-      </p>
-      <button class="primary-btn surprise-button" id="revealSurprise">
-        Unlock Your Surprise ✦
-      </button>
-    </div>
-
-    <div class="surprise-countdown" id="surpriseCountdown" aria-live="assertive">3</div>
-
-    <div class="surprise-reveal" id="surpriseReveal">
-      <div class="surprise-galaxy">✧</div>
-      <p class="eyebrow">A MESSAGE FROM THE UNIVERSE</p>
-      <h1>You Are Your Own Kind of Starlight.</h1>
-      <p id="typedMessage"></p>
-      <h3>The universe is a little more beautiful with you in it.</h3>
-      <button class="primary-btn surprise-button" id="replaySurprise">
-        Experience It Again ✦
-      </button>
-    </div>
-
-    <button class="skip-surprise" id="skipSurprise">
-      Return to the universe
-    </button>
+<section id="moon">
+  <div class="section-heading reveal">
+    <p class="eyebrow">Our Closest Celestial Neighbor</p>
+    <h2>Phases of the Moon</h2>
+    <p>Explore how the Moon's appearance changes as it orbits Earth.</p>
   </div>
+  <div class="moon-explorer">
+    <canvas id="moonCanvas" width="400" height="400" aria-label="Illustration of the current Moon phase"></canvas>
+    <h3 id="moonName">—</h3>
+    <p id="moonDescription">—</p>
+    <input type="range" id="moonSlider" min="0" max="29.530588" value="0" step=".1" aria-label="Move through the lunar phase cycle">
+    <div class="phase-labels"><span>New Moon</span><span>Full Moon</span><span>New Moon</span></div>
+    <p class="note" id="moonAge">Approximate phase age: —</p>
+  </div>
+</section>
+
+<section id="wish">
+  <div class="wish-box reveal">
+    <p class="eyebrow">A Little Wish</p>
+    <h2>Make a Wish Upon a Star</h2>
+    <p>Take a quiet moment, think of something you hope for, and send your wish into this little universe.</p>
+    <button class="primary-btn" id="wishBtn">Send My Wish ✦</button>
+    <div class="wish-result" id="wishResult" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="final-section" id="finalMessage">
+  <span class="secret-star" id="secretStar" title="A little hidden message" role="button" tabindex="0">✦</span>
+  <div class="final-content reveal">
+    <div class="final-star">✧</div>
+    <p class="eyebrow">A NOTE FOR YOU</p>
+    <h2>You Are Your Own Kind of Starlight.</h2>
+    <p id="mainMessage">Out of all the stars in the universe, every single one has its own story.
+
+I hope you never forget that you have your own kind of light, too.
+
+Keep dreaming. Keep exploring. And keep shining. ✨</p>
+    <p class="signature" id="signature">— From someone who wanted you to see the stars</p>
+    <div class="secret-message" id="secretMessage">Even on the quietest nights, the stars are still there. Keep being wonderfully you. ✨</div>
+  </div>
+</section>
+</main>
+
+<div class="final-surprise" id="finalSurprise" aria-hidden="true">
+  <div class="surprise-inner">
+    <div class="portal" id="portal"><span>✧</span></div>
+    <p class="eyebrow">ONE LAST DISCOVERY</p>
+    <div class="countdown" id="countdown">3</div>
+    <h2 id="surpriseTitle">A little message from the universe.</h2>
+    <p class="surprise-message" id="surpriseMessage"></p>
+    <div class="surprise-actions">
+      <button class="primary-btn" id="replaySurprise">Replay ✦</button>
+      <button class="secondary-btn" id="closeSurprise">Return to the stars</button>
+    </div>
+  </div>
+  <button class="secondary-btn skip-surprise" id="skipSurprise">Skip</button>
+</div>
+<footer>Made of stardust, curiosity, and a little bit of wonder. ✦</footer>
+
+<script>
+"use strict";
+
+/* PERSONALIZE THESE THREE VALUES */
+const PERSONAL = {
+  mainMessage: `Out of all the stars in the universe, every single one has its own story.
+
+I hope you never forget that you have your own kind of light, too.
+
+Keep dreaming. Keep exploring. And keep shining. ✨`,
+
+  surpriseMessage: `Out of all the stars in the universe,
+every single one has its own story.
+
+Some shine brighter.
+Some are far away.
+Some take millions of years for their light to reach us.
+
+And I hope you never forget
+that you have your own kind of light, too.
+
+Never stop dreaming.
+Never stop exploring.
+Never stop being wonderfully you.
+
+No matter how big the universe becomes,
+there will always be something special about you.
+
+Keep shining. ✨`,
+
+  signature: "— From someone who wanted you to see the stars"
+};
+
+document.getElementById("mainMessage").textContent = PERSONAL.mainMessage;
+document.getElementById("signature").textContent = PERSONAL.signature;
+
+/* INTRO + NAVIGATION */
+const intro = document.getElementById("intro");
+document.getElementById("enterBtn").addEventListener("click", () => intro.classList.add("hidden"));
+
+const menuButton = document.getElementById("menuButton");
+const navLinks = document.getElementById("navLinks");
+
+menuButton.addEventListener("click", () => {
+  const open = navLinks.classList.toggle("open");
+  menuButton.setAttribute("aria-expanded", String(open));
+});
+
+navLinks.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+  });
+});
+
+window.addEventListener("scroll", () => {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  document.getElementById("progress").style.width = (max > 0 ? scrollY / max * 100 : 0) + "%";
+}, { passive: true });
+
+/* TWINKLING BACKGROUND STARS */
+const starCanvas = document.getElementById("starfield");
+const sctx = starCanvas.getContext("2d");
+let stars = [], sw = 0, sh = 0;
+
+function resizeStars() {
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  sw = innerWidth;
+  sh = innerHeight;
+  starCanvas.width = sw * dpr;
+  starCanvas.height = sh * dpr;
+  sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  stars = Array.from({ length: Math.min(240, Math.floor(sw * sh / 5500)) }, () => ({
+    x: Math.random() * sw,
+    y: Math.random() * sh,
+    r: Math.random() * 1.35 + .2,
+    a: Math.random() * .65 + .2,
+    p: Math.random() * 6.28,
+    v: Math.random() * .018 + .003
+  }));
+}
+
+function drawStars(t) {
+  sctx.clearRect(0, 0, sw, sh);
+  for (const s of stars) {
+    const alpha = s.a * (.65 + .35 * Math.sin(t * s.v + s.p));
+    sctx.fillStyle = `rgba(230,232,255,${alpha})`;
+    sctx.beginPath();
+    sctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    sctx.fill();
+  }
+  requestAnimationFrame(drawStars);
+}
+
+resizeStars();
+addEventListener("resize", resizeStars);
+requestAnimationFrame(drawStars);
+
+/* PLANET FACTS */
+const planetFacts = {
+  Mercury: "Mercury is the smallest planet and the closest to the Sun. One orbit takes about 88 Earth days.",
+  Venus: "Venus has a very dense atmosphere and a surface hot enough to melt lead. It rotates in the opposite direction to most planets.",
+  Earth: "Earth is the only world known to support life. Its surface is shaped by oceans, continents, and a protective atmosphere.",
+  Mars: "Mars is a cold desert world with the largest volcano in the Solar System, Olympus Mons.",
+  Jupiter: "Jupiter is the largest planet. Its Great Red Spot is a giant storm that has persisted for centuries.",
+  Saturn: "Saturn's spectacular rings are made mostly of countless pieces of ice and rocky debris.",
+  Uranus: "Uranus rotates on its side relative to its orbit, giving it extreme seasons.",
+  Neptune: "Neptune is a distant ice giant with powerful winds and a deep blue atmosphere."
+};
+
+let selected = "Earth";
+
+document.querySelectorAll(".planet-card").forEach(card => {
+  card.addEventListener("click", () => {
+    document.querySelectorAll(".planet-card").forEach(c => c.classList.remove("active"));
+    card.classList.add("active");
+    const name = card.dataset.planet;
+    document.getElementById("planetTitle").textContent = name;
+    document.getElementById("planetDescription").textContent = planetFacts[name];
+    selected = name;
+    renderOrbit();
+  });
+});
+
+/* SOLAR SYSTEM MODEL: APPROXIMATE KEPLERIAN ELEMENTS.
+   These elements are suitable for an educational two-body model,
+   not precision ephemeris or spacecraft navigation. */
+const orbitalData = [
+  {name:"Mercury",a:.38709843,ad:0,e:.20563661,ed:.00002123,I:7.00559432,Id:-.00590158,L:252.25166724,Ld:149472.67486623,p:77.45771895,pd:.15940013,N:48.33961819,Nd:-.12214182,color:"#b8b6b2",size:4},
+  {name:"Venus",a:.72332102,ad:-.00000026,e:.00676399,ed:-.00005107,I:3.39777545,Id:.00043494,L:181.97970850,Ld:58517.81560260,p:131.76755713,pd:.05679648,N:76.67261496,Nd:-.27274174,color:"#e7bd84",size:6},
+  {name:"Earth",a:1.00000018,ad:-.00000003,e:.01673163,ed:-.00003661,I:-.00054346,Id:-.01337178,L:100.46691572,Ld:35999.37306329,p:102.93005885,pd:.31795260,N:-5.11260389,Nd:-.24123856,color:"#55aaff",size:7},
+  {name:"Mars",a:1.52371243,ad:.00000097,e:.09336511,ed:.00009149,I:1.85181869,Id:-.00724757,L:-4.56813164,Ld:19140.29934243,p:-23.91744784,pd:.45223625,N:49.71320984,Nd:-.26852431,color:"#e27b59",size:5},
+  {name:"Jupiter",a:5.20248019,ad:-.00002864,e:.04853590,ed:.00018026,I:1.29861416,Id:-.00322699,L:34.33479152,Ld:3034.90371757,p:14.27495244,pd:.18199196,N:100.29282654,Nd:.13024619,color:"#d8ad86",size:11},
+  {name:"Saturn",a:9.54149883,ad:-.00003065,e:.05550825,ed:-.00032044,I:2.49424102,Id:.00451969,L:50.07571329,Ld:1222.11494724,p:92.86136063,pd:.54179478,N:113.63998702,Nd:-.25015002,color:"#e7d19b",size:10},
+  {name:"Uranus",a:19.18797948,ad:-.00020455,e:.04685740,ed:-.00001550,I:.77298127,Id:-.00180155,L:314.20276625,Ld:428.49512595,p:172.43404441,pd:.09266985,N:73.96250215,Nd:.05739699,color:"#86d9df",size:8},
+  {name:"Neptune",a:30.06952752,ad:.00006447,e:.00895439,ed:.00000818,I:1.77005520,Id:.00022400,L:304.22289287,Ld:218.46515314,p:46.68158724,pd:.01009938,N:131.78635853,Nd:-.00606302,color:"#6689f0",size:8}
+];
+
+const DEG = Math.PI / 180;
+const DAY = 86400000;
+const JD_UNIX = 2440587.5;
+let simDate = new Date();
+let running = true;
+let speed = 5;
+let lastFrame = 0;
+
+const orbitCanvas = document.getElementById("orbitCanvas");
+const octx = orbitCanvas.getContext("2d");
+
+function julianDate(date) {
+  return date.getTime() / DAY + JD_UNIX;
+}
+
+function normRad(value) {
+  return ((value % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+}
+
+function solveKepler(M, e) {
+  let E = M;
+  for (let i = 0; i < 12; i++) {
+    const delta = (E - e * Math.sin(E) - M) / (1 - e * Math.cos(E));
+    E -= delta;
+    if (Math.abs(delta) < 1e-10) break;
+  }
+  return E;
+}
+
+function positionAt(body, date) {
+  const T = (julianDate(date) - 2451545) / 36525;
+  const a = body.a + body.ad * T;
+  const e = body.e + body.ed * T;
+  const I = (body.I + body.Id * T) * DEG;
+  const L = (body.L + body.Ld * T) * DEG;
+  const p = (body.p + body.pd * T) * DEG;
+  const N = (body.N + body.Nd * T) * DEG;
+  const w = p - N;
+  const M = normRad(L - p);
+  const E = solveKepler(M, e);
+  const xp = a * (Math.cos(E) - e);
+  const yp = a * Math.sqrt(1 - e * e) * Math.sin(E);
+  const cw = Math.cos(w), sw = Math.sin(w);
+  const cN = Math.cos(N), sN = Math.sin(N);
+  const cI = Math.cos(I), sI = Math.sin(I);
+  const x = (cw*cN - sw*sN*cI)*xp + (-sw*cN - cw*sN*cI)*yp;
+  const y = (cw*sN + sw*cN*cI)*xp + (-sw*sN + cw*cN*cI)*yp;
+  const z = (sw*sI)*xp + (cw*sI)*yp;
+  return {x, y, z, r:Math.hypot(x,y,z)};
+}
+
+function orbitPoint(body, E, date) {
+  const T = (julianDate(date) - 2451545) / 36525;
+  const a = body.a + body.ad * T;
+  const e = body.e + body.ed * T;
+  const I = (body.I + body.Id * T) * DEG;
+  const p = (body.p + body.pd * T) * DEG;
+  const N = (body.N + body.Nd * T) * DEG;
+  const w = p - N;
+  const xp = a * (Math.cos(E) - e);
+  const yp = a * Math.sqrt(1 - e * e) * Math.sin(E);
+  const cw = Math.cos(w), sw = Math.sin(w);
+  const cN = Math.cos(N), sN = Math.sin(N);
+  const cI = Math.cos(I), sI = Math.sin(I);
+  return {
+    x:(cw*cN-sw*sN*cI)*xp+(-sw*cN-cw*sN*cI)*yp,
+    y:(cw*sN+sw*cN*cI)*xp+(-sw*cN+cw*sN*cI)*yp
+  };
+}
+
+function renderOrbit() {
+  const W = orbitCanvas.width, H = orbitCanvas.height;
+  const cx = W / 2, cy = H / 2, scale = 10.3;
+  octx.clearRect(0, 0, W, H);
+
+  octx.strokeStyle = "#ffffff13";
+  octx.lineWidth = 1;
+  [1,5,10,20,30].forEach(au => {
+    octx.beginPath();
+    octx.arc(cx, cy, au * scale, 0, Math.PI * 2);
+    octx.stroke();
+    octx.fillStyle = "#9aa3c4";
+    octx.font = "12px DM Sans";
+    octx.fillText(au + " AU", cx + au * scale + 5, cy - 4);
+  });
+
+  const sunGlow = octx.createRadialGradient(cx,cy,2,cx,cy,35);
+  sunGlow.addColorStop(0,"#fff9ce");
+  sunGlow.addColorStop(.25,"#ffd76b");
+  sunGlow.addColorStop(1,"#ffb32b00");
+  octx.fillStyle = sunGlow;
+  octx.beginPath();
+  octx.arc(cx,cy,35,0,Math.PI*2);
+  octx.fill();
+  octx.fillStyle = "#ffe9a3";
+  octx.beginPath();
+  octx.arc(cx,cy,8,0,Math.PI*2);
+  octx.fill();
+
+  const positions = {};
+  orbitalData.forEach(body => {
+    octx.beginPath();
+    for (let j=0;j<=240;j++) {
+      const E = j / 240 * Math.PI * 2;
+      const p = orbitPoint(body,E,simDate);
+      const x = cx + p.x * scale;
+      const y = cy - p.y * scale;
+      if (j===0) octx.moveTo(x,y);
+      else octx.lineTo(x,y);
+    }
+    octx.closePath();
+    octx.strokeStyle = body.name===selected ? body.color+"cc" : "#ffffff35";
+    octx.lineWidth = body.name===selected ? 2 : 1;
+    octx.stroke();
+
+    const p = positionAt(body,simDate);
+    positions[body.name] = p;
+    const x = cx + p.x * scale;
+    const y = cy - p.y * scale;
+
+    octx.fillStyle = body.color;
+    octx.beginPath();
+    octx.arc(x,y,body.size,0,Math.PI*2);
+    octx.fill();
+
+    if (body.name==="Saturn") {
+      octx.strokeStyle="#e7d19b";
+      octx.lineWidth=2;
+      octx.beginPath();
+      octx.ellipse(x,y,body.size*1.8,body.size*.7,-.35,0,Math.PI*2);
+      octx.stroke();
+    }
+
+    octx.fillStyle="#e4e6f5";
+    octx.font="13px DM Sans";
+    octx.fillText(body.name,x+body.size+5,y-8);
+  });
+
+  const earth = positions.Earth;
+  document.getElementById("simDate").textContent = "Date: " + simDate.toISOString().slice(0,10);
+  document.getElementById("selectedPlanet").textContent = "Selected: " + selected;
+  document.getElementById("earthDistance").textContent = "Earth–Sun: " + earth.r.toFixed(3) + " AU";
+}
+
+function tick(timestamp) {
+  if (!lastFrame) lastFrame = timestamp;
+  const dt = Math.min((timestamp - lastFrame) / 1000, .1);
+  lastFrame = timestamp;
+  if (running) {
+    simDate = new Date(simDate.getTime() + dt * speed * DAY);
+    renderOrbit();
+  }
+  requestAnimationFrame(tick);
+}
+
+document.getElementById("playPause").addEventListener("click", event => {
+  running = !running;
+  event.currentTarget.textContent = running ? "Pause" : "Play";
+});
+document.getElementById("dayBack").addEventListener("click", () => {
+  simDate = new Date(simDate.getTime() - 30 * DAY);
+  renderOrbit();
+});
+document.getElementById("dayForward").addEventListener("click", () => {
+  simDate = new Date(simDate.getTime() + 30 * DAY);
+  renderOrbit();
+});
+document.getElementById("resetDate").addEventListener("click", () => {
+  simDate = new Date();
+  renderOrbit();
+});
+document.getElementById("speedSelect").addEventListener("change", event => {
+  speed = Number(event.target.value);
+});
+document.querySelectorAll(".planet-card").forEach(card => {
+  card.addEventListener("click", () => {
+    selected = card.dataset.planet;
+    renderOrbit();
+  });
+});
+renderOrbit();
+requestAnimationFrame(tick);
+
+/* CONSTELLATION DIAGRAMS */
+const constellations = {
+  "Orion": {
+    info:"Orion is a prominent equatorial constellation. Its three belt stars form a recognizable straight line.",
+    pts:[[80,70],[150,120],[225,75],[175,190],[260,220],[315,140],[125,225],[290,45]],
+    lines:[[0,1],[1,2],[1,3],[3,4],[4,5],[0,6],[2,7]]
+  },
+  "Ursa Major": {
+    info:"Ursa Major is a large northern constellation. The Big Dipper is an asterism within it, not the whole constellation.",
+    pts:[[60,90],[130,65],[205,90],[260,155],[320,205],[245,240],[170,210]],
+    lines:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,3]]
+  },
+  "Cassiopeia": {
+    info:"Cassiopeia is commonly recognized by its five brighter stars forming a W or M shape, depending on its orientation.",
+    pts:[[55,90],[125,210],[205,85],[275,215],[345,100]],
+    lines:[[0,1],[1,2],[2,3],[3,4]]
+  },
+  "Your Star": {
+    info:"A small imaginary constellation for this personal universe. Its shape is decorative rather than an official constellation.",
+    pts:[[90,210],[150,95],[205,175],[270,70],[320,220]],
+    lines:[[0,1],[1,2],[2,3],[3,4],[0,2]]
+  }
+};
+
+function drawConstellation(name) {
+  const constellation = constellations[name];
+  const lines = document.getElementById("starLines");
+  const points = document.getElementById("starPoints");
+  lines.innerHTML = "";
+  points.innerHTML = "";
+
+  constellation.lines.forEach(([a,b]) => {
+    const line = document.createElementNS("http://www.w3.org/2000/svg","line");
+    line.setAttribute("x1",constellation.pts[a][0]);
+    line.setAttribute("y1",constellation.pts[a][1]);
+    line.setAttribute("x2",constellation.pts[b][0]);
+    line.setAttribute("y2",constellation.pts[b][1]);
+    lines.appendChild(line);
+  });
+
+  constellation.pts.forEach(([x,y]) => {
+    const point = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    point.setAttribute("cx",x);
+    point.setAttribute("cy",y);
+    point.setAttribute("r",5);
+    point.setAttribute("class","star-point");
+    points.appendChild(point);
+  });
+
+  document.getElementById("constellationInfo").textContent = constellation.info;
+}
+
+document.querySelectorAll(".constellation-option").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".constellation-option").forEach(item => item.classList.remove("active"));
+    button.classList.add("active");
+    drawConstellation(button.dataset.constellation);
+  });
+});
+drawConstellation("Orion");
+
+/* APPROXIMATE MOON PHASE */
+const SYNODIC = 29.530588853;
+const REF_NEW_JD = 2451550.1;
+const moonCanvas = document.getElementById("moonCanvas");
+const mctx = moonCanvas.getContext("2d");
+const phaseSlider = document.getElementById("moonSlider");
+
+function moonPhaseFromDate(date) {
+  let age = (julianDate(date) - REF_NEW_JD) % SYNODIC;
+  if (age < 0) age += SYNODIC;
+  return age;
+}
+
+function drawMoon(age) {
+  const f = age / SYNODIC;
+  const angle = 2 * Math.PI * f;
+  const illumination = (1 - Math.cos(angle)) / 2;
+  const names = ["New Moon","Waxing Crescent","First Quarter","Waxing Gibbous","Full Moon","Waning Gibbous","Last Quarter","Waning Crescent"];
+  const descriptions = [
+    "The Moon is between Earth and the Sun; its near side appears mostly dark.",
+    "A slim sunlit crescent is growing.",
+    "About half of the Moon's visible face is illuminated.",
+    "More than half is illuminated and the bright portion is growing.",
+    "The near side is fully illuminated as seen from Earth.",
+    "More than half is illuminated, and the bright portion is shrinking.",
+    "About half of the visible face is illuminated again.",
+    "A thin crescent remains before the next new Moon."
+  ];
+  const index = Math.round(f * 8) % 8;
+  const cx=200,cy=200,r=145;
+  mctx.clearRect(0,0,400,400);
+
+  const gradient=mctx.createRadialGradient(145,135,15,200,200,170);
+  gradient.addColorStop(0,"#fffef0");
+  gradient.addColorStop(.55,"#d7d7cf");
+  gradient.addColorStop(1,"#777d8e");
+  mctx.fillStyle=gradient;
+  mctx.beginPath();
+  mctx.arc(cx,cy,r,0,Math.PI*2);
+  mctx.fill();
+
+  for(let i=0;i<24;i++){
+    const a=i*2.3999632297;
+    const rr=(.18+(i%7)*.095)*r;
+    const x=cx+Math.cos(a)*rr;
+    const y=cy+Math.sin(a)*rr;
+    const crater=3+(i%4)*2;
+    mctx.fillStyle="rgba(75,79,91,.10)";
+    mctx.beginPath();
+    mctx.arc(x,y,crater,0,Math.PI*2);
+    mctx.fill();
+  }
+
+  mctx.save();
+  mctx.beginPath();
+  mctx.arc(cx,cy,r,0,Math.PI*2);
+  mctx.clip();
+
+  const waxing=f<.5;
+  const terminator=Math.abs(Math.cos(angle))*r;
+  mctx.fillStyle="#090d20";
+
+  if(f<.001||f>.999){
+    mctx.fillRect(cx-r,cy-r,2*r,2*r);
+  }else if(Math.abs(illumination-.5)<.025){
+    if(waxing)mctx.fillRect(cx-r,cy-r,r,2*r);
+    else mctx.fillRect(cx,cy-r,r,2*r);
+  }else{
+    mctx.beginPath();
+    if(waxing){
+      mctx.arc(cx,cy,r,Math.PI/2,Math.PI*1.5,false);
+      mctx.ellipse(cx,cy,Math.max(1,terminator),r,0,-Math.PI/2,Math.PI/2,true);
+    }else{
+      mctx.arc(cx,cy,r,-Math.PI/2,Math.PI/2,false);
+      mctx.ellipse(cx,cy,Math.max(1,terminator),r,0,Math.PI/2,Math.PI*1.5,true);
+    }
+    mctx.closePath();
+    mctx.fill();
+  }
+  mctx.restore();
+
+  mctx.strokeStyle="#ffffff55";
+  mctx.lineWidth=2;
+  mctx.beginPath();
+  mctx.arc(cx,cy,r,0,Math.PI*2);
+  mctx.stroke();
+
+  document.getElementById("moonName").textContent=names[index];
+  document.getElementById("moonDescription").textContent=descriptions[index]+" Approximate illuminated fraction: "+(illumination*100).toFixed(0)+"%.";
+  document.getElementById("moonAge").textContent="Approximate phase age: "+age.toFixed(1)+" days of a "+SYNODIC.toFixed(2)+"-day cycle.";
+}
+
+function syncMoon() {
+  const age=moonPhaseFromDate(new Date());
+  phaseSlider.value=age;
+  drawMoon(age);
+}
+phaseSlider.addEventListener("input",()=>drawMoon(Number(phaseSlider.value)));
+syncMoon();
+
+/* WISH EFFECT */
+const wishes=[
+  "May your dreams find their way to you.",
+  "May curiosity always lead you somewhere wonderful.",
+  "May you find light, even on the quietest nights.",
+  "May the universe surprise you with beautiful things.",
+  "May you never run out of reasons to look up."
+];
+
+document.getElementById("wishBtn").addEventListener("click",()=>{
+  document.getElementById("wishResult").textContent=wishes[Math.floor(Math.random()*wishes.length)];
+  const star=document.createElement("span");
+  star.className="particle";
+  star.style.setProperty("--dx",(Math.random()*500-250)+"px");
+  star.style.setProperty("--dy",(Math.random()*-420-80)+"px");
+  document.body.appendChild(star);
+  setTimeout(()=>star.remove(),1600);
+});
+
+/* SECRET STAR */
+function revealSecret() {
+  document.getElementById("secretMessage").classList.toggle("show");
+}
+document.getElementById("secretStar").addEventListener("click",revealSecret);
+document.getElementById("secretStar").addEventListener("keydown",event=>{
+  if(event.key==="Enter"||event.key===" "){
+    event.preventDefault();
+    revealSecret();
+  }
+});
+
+/* SCROLL REVEAL */
+const revealElements=document.querySelectorAll(".reveal");
+if("IntersectionObserver" in window){
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:.08});
+  revealElements.forEach(element=>observer.observe(element));
+}else{
+  revealElements.forEach(element=>element.classList.add("visible"));
+}
+
+/* CINEMATIC SURPRISE */
+const surprise=document.getElementById("finalSurprise");
+const countdown=document.getElementById("countdown");
+const messageElement=document.getElementById("surpriseMessage");
+let surpriseTimers=[];
+let typingTimer=null;
+
+function clearSurpriseTimers(){
+  surpriseTimers.forEach(clearTimeout);
+  surpriseTimers=[];
+  if(typingTimer)clearInterval(typingTimer);
+  typingTimer=null;
+}
+
+function typeMessage(text){
+  messageElement.textContent="";
+  let index=0;
+  typingTimer=setInterval(()=>{
+    messageElement.textContent+=text.charAt(index++);
+    if(index>=text.length){
+      clearInterval(typingTimer);
+      typingTimer=null;
+    }
+  },28);
+}
+
+function makeBurst(){
+  for(let i=0;i<42;i++){
+    const particle=document.createElement("span");
+    particle.className="particle";
+    const angle=Math.PI*2*i/42;
+    const distance=100+Math.random()*230;
+    particle.style.setProperty("--dx",Math.cos(angle)*distance+"px");
+    particle.style.setProperty("--dy",Math.sin(angle)*distance+"px");
+    surprise.appendChild(particle);
+    setTimeout(()=>particle.remove(),1700);
+  }
+}
+
+function startSurprise(){
+  clearSurpriseTimers();
+  surprise.classList.add("active");
+  surprise.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+  messageElement.textContent="";
+  document.getElementById("surpriseTitle").textContent="A little message from the universe.";
+  countdown.style.display="block";
+  let number=3;
+  countdown.textContent=number;
+
+  const step=()=>{
+    number--;
+    if(number>0){
+      countdown.textContent=number;
+      surpriseTimers.push(setTimeout(step,850));
+    }else{
+      countdown.style.display="none";
+      document.getElementById("surpriseTitle").textContent="You Are Your Own Kind of Starlight.";
+      makeBurst();
+      typeMessage(PERSONAL.surpriseMessage);
+    }
+  };
+  surpriseTimers.push(setTimeout(step,850));
+}
+
+function closeSurprise(){
+  clearSurpriseTimers();
+  surprise.classList.remove("active");
+  surprise.setAttribute("aria-hidden","true");
+  document.body.style.overflow="";
+  countdown.style.display="block";
+}
+
+document.getElementById("replaySurprise").addEventListener("click",startSurprise);
+document.getElementById("closeSurprise").addEventListener("click",closeSurprise);
+document.getElementById("skipSurprise").addEventListener("click",closeSurprise);
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape"&&surprise.classList.contains("active"))closeSurprise();
+});
+
+const finalSection=document.getElementById("finalMessage");
+if("IntersectionObserver" in window){
+  let autoTriggered=false;
+  const finalObserver=new IntersectionObserver(entries=>{
+    if(entries.some(entry=>entry.isIntersecting)&&!autoTriggered){
+      autoTriggered=true;
+      startSurprise();
+      finalObserver.disconnect();
+    }
+  },{threshold:.55});
+  finalObserver.observe(finalSection);
+}
+</script>
 </body>
 </html>
