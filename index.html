@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Universe Just for You ✦</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#home">✦ A UNIVERSE JUST FOR YOU</a>
+  <nav>
+    <a href="#planets">Planets</a>
+    <a href="#stars">Constellations</a>
+    <a href="#moon">Moon</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <canvas id="starfield"></canvas>
+  <div class="hero-copy">
+    <p class="eyebrow">A SMALL CORNER OF THE COSMOS</p>
+    <h1>Somewhere in<br>this <em>universe,</em><br>there is wonder.</h1>
+    <p class="hero-sub">And this little universe was made for you.<br>Take a breath, look around, and explore.</p>
+    <a class="gold-button" href="#planets">Begin exploring ↗</a>
+  </div>
+  <div class="hero-planet-wrap">
+    <div class="hero-orbit orbit-one"></div>
+    <div class="hero-orbit orbit-two"></div>
+    <div class="hero-planet"></div>
+    <div class="hero-moon"></div>
+  </div>
+  <div class="hero-bottom">SCROLL TO EXPLORE ✦ 01 / 06</div>
+</section>
+
+<section class="section planets-section" id="planets">
+  <div class="section-head">
+    <p class="eyebrow">01 — OUR SOLAR NEIGHBOURHOOD</p>
+    <h2>Little worlds,<br><em>big wonders.</em></h2>
+    <p>Choose a planet and discover a little piece of our cosmic neighbourhood.</p>
+  </div>
+
+  <div class="solar-system">
+    <div class="sun"></div>
+    <button class="planet-button mercury" data-planet="Mercury"><span class="planet-ball"></span><small>Mercury</small></button>
+    <button class="planet-button venus" data-planet="Venus"><span class="planet-ball"></span><small>Venus</small></button>
+    <button class="planet-button earth" data-planet="Earth"><span class="planet-ball"></span><small>Earth</small></button>
+    <button class="planet-button mars" data-planet="Mars"><span class="planet-ball"></span><small>Mars</small></button>
+    <button class="planet-button jupiter" data-planet="Jupiter"><span class="planet-ball"></span><small>Jupiter</small></button>
+    <button class="planet-button saturn" data-planet="Saturn"><span class="planet-ball"></span><small>Saturn</small></button>
+    <button class="planet-button uranus" data-planet="Uranus"><span class="planet-ball"></span><small>Uranus</small></button>
+    <button class="planet-button neptune" data-planet="Neptune"><span class="planet-ball"></span><small>Neptune</small></button>
+  </div>
+
+  <div class="planet-info" id="planet-info">
+    <div class="info-symbol">✦</div>
+    <div>
+      <p class="eyebrow">A PLANET TO DISCOVER</p>
+      <h3>Choose a world</h3>
+      <p>Tap any planet above to reveal a fascinating fact.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section constellation-section" id="stars">
+  <div class="section-head">
+    <p class="eyebrow">02 — PATTERNS IN THE NIGHT</p>
+    <h2>Stories written<br><em>in starlight.</em></h2>
+    <p>Pick a constellation to discover its story.</p>
+  </div>
+
+  <div class="constellation-grid">
+    <button class="constellation-card" data-constellation="orion">
+      <svg viewBox="0 0 180 130">
+        <path d="M35 20 L75 48 L105 44 L143 12 M75 48 L85 76 L105 44 M85 76 L54 112 L25 100 M85 76 L121 107 L145 95"/>
+        <g>
+          <circle cx="35" cy="20" r="3"/><circle cx="75" cy="48" r="3"/>
+          <circle cx="105" cy="44" r="3"/><circle cx="143" cy="12" r="3"/>
+          <circle cx="85" cy="76" r="3"/><circle cx="54" cy="112" r="3"/>
+          <circle cx="25" cy="100" r="3"/><circle cx="121" cy="107" r="3"/>
+          <circle cx="145" cy="95" r="3"/>
+        </g>
+      </svg>
+      <strong>Orion</strong><small>The Hunter</small>
+    </button>
+
+    <button class="constellation-card" data-constellation="ursa">
+      <svg viewBox="0 0 180 130">
+        <path d="M25 25 L62 18 L85 43 L122 52 L142 85 L105 96 L75 72 L85 43"/>
+        <g>
+          <circle cx="25" cy="25" r="3"/><circle cx="62" cy="18" r="3"/>
+          <circle cx="85" cy="43" r="3"/><circle cx="122" cy="52" r="3"/>
+          <circle cx="142" cy="85" r="3"/><circle cx="105" cy="96" r="3"/>
+          <circle cx="75" cy="72" r="3"/>
+        </g>
+      </svg>
+      <strong>Ursa Major</strong><small>The Great Bear</small>
+    </button>
+
+    <button class="constellation-card" data-constellation="cassiopeia">
+      <svg viewBox="0 0 180 130">
+        <path d="M18 33 L53 83 L88 35 L125 85 L160 29"/>
+        <g>
+          <circle cx="18" cy="33" r="3"/><circle cx="53" cy="83" r="3"/>
+          <circle cx="88" cy="35" r="3"/><circle cx="125" cy="85" r="3"/>
+          <circle cx="160" cy="29" r="3"/>
+        </g>
+      </svg>
+      <strong>Cassiopeia</strong><small>The Queen</small>
+    </button>
+  </div>
+
+  <div class="constellation-detail" id="constellation-detail">
+    <span>✧</span><p>Select a constellation to read its story.</p>
+  </div>
+</section>
+
+<section class="galaxy-section">
+  <div class="galaxy-art">
+    <div class="galaxy-core"></div>
+    <div class="galaxy-arm arm-a"></div>
+    <div class="galaxy-arm arm-b"></div>
+    <div class="galaxy-arm arm-c"></div>
+    <div class="galaxy-dust"></div>
+  </div>
+  <div class="galaxy-copy">
+    <p class="eyebrow">03 — BEYOND OUR SOLAR SYSTEM</p>
+    <h2>A universe<br>of <em>possibilities.</em></h2>
+    <p>Galaxies are enormous collections of stars, gas, dust, and dark matter, all held together by gravity. Our home galaxy, the Milky Way, contains billions of stars.</p>
+    <p class="small-note">Take a moment to enjoy the view. There's no rush here.</p>
+  </div>
+</section>
+
+<section class="section moon-section" id="moon">
+  <div class="section-head">
+    <p class="eyebrow">04 — OUR CONSTANT COMPANION</p>
+    <h2>Phases of the<br><em>Moon.</em></h2>
+    <p>Move through the lunar cycle and watch the Moon's appearance change.</p>
+  </div>
+
+  <div class="moon-explorer">
+    <div class="moon-visual">
+      <div class="moon-disc" id="moon-disc"></div>
+      <div class="moon-halo"></div>
+    </div>
+    <div class="moon-controls">
+      <p class="eyebrow">LUNAR DAY <span id="moon-day">0</span> / 29</p>
+      <h3 id="moon-name">New Moon</h3>
+      <p id="moon-description">The Moon is between Earth and the Sun, so its illuminated side faces away from us.</p>
+      <input id="moon-slider" type="range" min="0" max="29" value="0">
+      <div class="range-labels">
+        <span>New</span><span>First quarter</span><span>Full</span><span>Last quarter</span><span>New</span>
+      </div>
+      <div class="moon-buttons">
+        <button id="moon-prev">←</button>
+        <button id="moon-next">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wish-section" id="wish">
+  <div class="wish-content">
+    <p class="eyebrow">05 — A MOMENT JUST FOR YOU</p>
+    <h2>Make a <em>wish.</em></h2>
+    <p>When a shooting star appears, send a quiet wish into the universe.</p>
+    <div class="wish-sky" id="wish-sky">
+      <span class="wish-star">✦</span>
+      <span class="wish-star">✧</span>
+      <span class="wish-star">✦</span>
+    </div>
+    <p class="wish-feedback" id="wish-feedback">Look closely. A shooting star might pass by...</p>
+    <button class="wish-button" id="wish-button">Send a shooting star ↗</button>
+  </div>
+</section>
+
+<section class="final-section">
+  <div class="final-orb">✦</div>
+  <p class="eyebrow">06 — BEFORE YOU GO</p>
+  <h2>One little thing<br><em>to remember.</em></h2>
+  <p class="final-message">
+    In a universe filled with billions of stars, every one has its own light.
+    I hope you never forget that you have yours, too.
+    Keep being curious, keep looking up, and never stop finding wonder in the little things.
+  </p>
+  <p class="final-sign">Wishing you beautiful things, always. ♡</p>
+  <a class="back-top" href="#home">Return to the stars ↑</a>
+</section>
+</main>
+
+<footer>✦ MADE WITH CARE, UNDER THE SAME SKY ✦</footer>
+<script src="script.js"></script>
+</body>
+</html>
